@@ -457,6 +457,18 @@ def test_urllib3_six(pyi_builder):
         """)
 
 
+@importorskip('salt.ext.six')
+def test_salt_ext_six(pyi_builder):
+    # Test for pre-safe-import salt.ext.six.moves.
+    pyi_builder.test_source("""
+        import salt.config # this submodule imports six
+        import types
+        # Verify salt.version imports six (to discover if the test
+        # we be outdated).
+        assert isinstance(salt.config.urlparse, types.FunctionType)
+        """)
+
+
 @importorskip('sqlite3')
 def test_sqlite3(pyi_builder):
     pyi_builder.test_source(
